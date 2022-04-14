@@ -18,7 +18,7 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	textureHandle_ = TextureManager::Load("mario.jpg");
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
 	model_ = Model::Create();
 	//ワールドドランスフォーム初期化
@@ -33,6 +33,22 @@ void GameScene::Initialize() {
 	//音声再生
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 
+	
+
+	// X,Y,Z 方向のスケーリングを設定
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+
+	// X,Y,Z 軸周りの回転角を設定
+	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
+
+	//X,Y,Z 軸周りの平行移動の設定
+	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
+
+	
+	//ワールドトランスフォーム
+	worldTransform_.Initialize();
+	//ビュープロダクション
+	viewProjection_.Initialize();
 	
 }
 
@@ -56,16 +72,20 @@ void GameScene::Update()
 
 	//書式指定付き表示
 	debugText_->SetPos(50, 70);
-	debugText_->Printf("year:%d", 2001);
+	debugText_->Printf( "translation:(%f,%f,%f)", worldTransform_.translation_.x, worldTransform_.translation_.y,worldTransform_.translation_.z);
+	debugText_->SetPos(50, 70+15);
+	debugText_->Printf( "rotation:(%f,%f,%f)", worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z);
+	debugText_->SetPos(50, 70+30);
+	debugText_->Printf("scale:(%f,%f,%f)", worldTransform_.scale_.x, worldTransform_.scale_.y, worldTransform_.scale_.z);
 
 	//変数の値をインクリメント
 	value_++;
 	// 値を含んだ文字列
-	std::string strDebug = std::string("Value") + 
-	std::to_string(value_);
+	/*std::string strDebug = std::string("Value") + 
+	std::to_string(value_);*/
 
 	//デバックテキストの表示
-	debugText_->Print(strDebug, 50, 50, 1.0f);
+	//debugText_->Print(strDebug, 50, 50, 1.0f);
 
 
 }
@@ -108,7 +128,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+	//sprite_->Draw();
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
 	//
