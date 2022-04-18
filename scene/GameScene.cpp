@@ -26,12 +26,12 @@ void GameScene::Initialize() {
 	//ビュープロダクションの初期化
 	viewProjection_.Initialize();
 	//サウンドデータの読み込み
-	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
-	//サウンドの再生
-	
-	//audio_->PlayWave(soundDataHandle_);
-	//音声再生
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	//soundDataHandle_ = audio_->LoadWave("fanfare.wav");
+	////サウンドの再生
+	//
+	////audio_->PlayWave(soundDataHandle_);
+	////音声再生
+	//voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 
 	
 
