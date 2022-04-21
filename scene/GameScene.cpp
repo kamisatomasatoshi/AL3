@@ -1,6 +1,7 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "random"
 
 using namespace DirectX;
 
@@ -49,6 +50,20 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	//ビュープロダクション
 	viewProjection_.Initialize();
+
+	//乱数シード生成器
+	std::random_device seed_gen;
+	//メルセンヌ・ツイスター
+	std::mt19937_64 engine(seed_gen());
+	//乱数範囲(回転角用)
+	std::uniform_real_distribution<float> rotDist(0.0f, XM_2PI);
+	//乱数範囲(座標用)
+	std::uniform_real_distribution<float> posDist(-10.0f, 10.0f);
+
+	//X,Y,Zの平行移動のを設定
+	//worldTransform_.translation_={0.0f, 10.0f, 0.0f};
+
+
 	
 }
 
