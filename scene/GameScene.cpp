@@ -35,19 +35,21 @@ void GameScene::Initialize() {
 	//voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 
 	
+	for (size_t i = 0; i < _countof(worldTransform_); i++) 
+	{
 
-	// X,Y,Z 方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+		// X,Y,Z 方向のスケーリングを設定
+		worldTransform_[i].scale_ = {1.0f, 1.0f, 1.0f};
 
-	// X,Y,Z 軸周りの回転角を設定
-	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
+		// X,Y,Z 軸周りの回転角を設定
+		worldTransform_[i].rotation_ = {rotDist(engine), rotDist(engine), rotDist(engine)};
 
-	//X,Y,Z 軸周りの平行移動の設定
-	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
+		// X,Y,Z 軸周りの平行移動の設定
+		worldTransform_[i].translation_ = {rotDist(engine), rotDist(engine), rotDist(engine)};
 
-	
-	//ワールドトランスフォーム
-	worldTransform_.Initialize();
+		//ワールドトランスフォーム
+		worldTransform_[i].Initialize();
+	}
 	//ビュープロダクション
 	viewProjection_.Initialize();
 
@@ -131,7 +133,10 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	for (size_t i = 0; i < _countof(worldTransform_); i++) 
+	{
+		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	}
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
